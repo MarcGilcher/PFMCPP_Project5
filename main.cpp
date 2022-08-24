@@ -102,13 +102,18 @@ struct Car
         void burnFuel(std::string fuelType, int maxOctaneNumber = 98);
         void rotateAxles(double maxTorque, bool isFourWheelDrive = false);
         double compressAir(double resonanceFrequency);
+        void printEngineCode();
+
     };
 
     void driveForward(int numGear, bool isBrakeReleased = true);
     double consumeFuel(bool pedalKickdown = true);
     void changeSparePart(Engine newEngine);
     void carService(int reminderTimeMonth);
-    int refuelCar( int fuelCapacity );
+    int refuelCar(int fuelCapacity);
+    void printInfo();
+    void printInfoFuel();
+    void printNewAmountOfFuel();
 
     Engine engineBeingChanged;
 };
@@ -131,6 +136,21 @@ Car::Engine::Engine() : numCylinder(6), numValves(16)
 Car::Engine::~Engine()
 {
     std::cout << "Engine deconstructed!" << std::endl;
+}
+
+void Car::printInfo()
+{
+    std::cout << "The car has " << this->numWheels << " Wheels and " << this->numSeats << " Seats." << std::endl;
+}
+
+void Car::printInfoFuel()
+{
+    std::cout << "Amount of consumed fuel: " << this->averageFuel << " Liters" <<std::endl;
+}
+
+void Car::Engine::printEngineCode()
+{
+    std::cout << "The engine Code is: " << this->engineCode << std::endl;
 }
 
 void Car::Engine::burnFuel(std::string fuelType, int maxOctaneNumber )
@@ -205,6 +225,12 @@ int Car::refuelCar(int fuelCapacity)
     }
     return currentFuel;
 }
+
+void Car::printNewAmountOfFuel()
+{
+    std::cout << this -> refuelCar(60) << ": New quantity of fuel is displayed." << std::endl;
+}
+
 /*
  copied UDT 2:
  */
@@ -222,6 +248,7 @@ struct Bicycle
     int shiftGear(int numActualGear);
     void decelarateBike();
     int checkGear( int startGear, int lastGear);
+    void printActualGear();
     
 };
 
@@ -271,6 +298,11 @@ int Bicycle::checkGear(int startGear, int lastGear)
     return 0;
 }
 
+void Bicycle::printActualGear()
+{
+    std::cout << "The actual gear is nr. " << this->shiftGear(5) << std::endl;
+}
+
 /*
  copied UDT 3:
  */
@@ -306,6 +338,8 @@ struct Player
     void moveY();
     void getWeaponUpgrade(Weapon newWeapon);
     int collisionCheck( int numCollisionObjects);
+    void printPlayerName();
+    void printCollisions();
 
     Weapon weaponUpgrade;
 };
@@ -372,6 +406,18 @@ int Player::collisionCheck(int numCollisionObjects)
     }
     return numCollisionObjects;
 }
+
+void Player::printPlayerName()
+{
+    std::cout << "Player Name: " << this->namePlayer << std::endl;
+}
+
+void Player::printCollisions()
+{
+    std::cout << this -> collisionCheck(5) << " possible Collisions checked." << std::endl;
+}
+
+
 /*
  new UDT 4:
  with 2 member functions
@@ -424,6 +470,7 @@ struct ArcadeGame
 
     int playerJump(int jumpX, int jumpY);
     void scoreCount(int points, int bonusCollected);
+    void printJumpVector();
 };
 
 ArcadeGame::ArcadeGame()
@@ -449,6 +496,12 @@ void ArcadeGame::scoreCount(int points, int bonusCollected)
     std::cout << "Score Points: " << points * bonusCollected << std::endl;
 }
 
+void ArcadeGame::printJumpVector()
+{
+    std::cout << "Jump Vector is: " << this -> playerJump(5,5) << std::endl;
+}
+
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -473,21 +526,26 @@ int main()
     truck.consumeFuel(true);
     truck.changeSparePart(dieselEngine);
     std::cout << "The car has " << truck.numWheels << " Wheels and " << truck.numSeats << " Seats." << std::endl;
+    truck.printInfo();
+    truck.printInfoFuel();
     std::cout << "Amount of consumed fuel: " << truck.averageFuel << " Liters" <<std::endl;
     truck.carService(10);
     int newAmountOfFuel = truck.refuelCar(60);
     std::cout << "New quantity of fuel is: " << newAmountOfFuel << std::endl;
+    truck.printNewAmountOfFuel();
     
     dieselEngine.burnFuel("Diesel", 98);
     dieselEngine.rotateAxles(180.5, true);
     dieselEngine.compressAir(800.35);
     std::cout << "The engine Code is: " << dieselEngine.engineCode << std::endl;
-
+    dieselEngine.printEngineCode();
+    
     Bicycle sportBicycle;
     sportBicycle.transportHuman();
     sportBicycle.shiftGear(5);
     sportBicycle.decelarateBike();
     std::cout << "The actual gear is nr. " << sportBicycle.shiftGear(5) << std::endl;
+    sportBicycle.printActualGear();
     sportBicycle.checkGear(1, 21);
 
     Player player1;
@@ -497,7 +555,9 @@ int main()
     player1.moveY();
     player1.getWeaponUpgrade(railGun);
     std::cout << "Player Name: " << player1.namePlayer << std::endl;
+    player1.printPlayerName();
     std::cout << player1.collisionCheck(5) << " possible Collisions checked." << std::endl;
+    player1.printCollisions();
     
     railGun.shootBullet(10.5,20.0);
     railGun.makeNoise(true);
@@ -510,6 +570,7 @@ int main()
     ArcadeGame jumpAndRun;
     int playerJumpVector = jumpAndRun.playerJump(5, 5);
     std::cout << "Jump Vector is: " << playerJumpVector << std::endl;
+    jumpAndRun.printJumpVector();
     jumpAndRun.scoreCount(100, 2);
      
     std::cout << "good to go!" << std::endl;
