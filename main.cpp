@@ -228,7 +228,7 @@ int Car::refuelCar(int fuelCapacity)
 
 void Car::printNewAmountOfFuel()
 {
-    std::cout << this -> refuelCar(60) << ": New quantity of fuel is displayed." << std::endl;
+    std::cout << this->refuelCar(60) << ": New quantity of fuel is displayed." << std::endl;
 }
 
 /*
@@ -414,7 +414,7 @@ void Player::printPlayerName()
 
 void Player::printCollisions()
 {
-    std::cout << this -> collisionCheck(5) << " possible Collisions checked." << std::endl;
+    std::cout << this->collisionCheck(5) << " possible Collisions checked." << std::endl;
 }
 
 
@@ -498,7 +498,7 @@ void ArcadeGame::scoreCount(int points, int bonusCollected)
 
 void ArcadeGame::printJumpVector()
 {
-    std::cout << "Jump Vector is: " << this -> playerJump(5,5) << std::endl;
+    std::cout << "Jump Vector is: " << this->playerJump(5,5) << std::endl;
 }
 
 
